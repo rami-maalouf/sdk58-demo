@@ -33,7 +33,6 @@ import {
   frame,
   lineLimit,
   listStyle,
-  navigationSplitViewColumnWidth,
   navigationTitle,
   opacity,
   padding,
@@ -206,7 +205,6 @@ export default function SplitViewScreen() {
                 modifiers={[
                   listStyle('sidebar'),
                   navigationTitle('Mailboxes'),
-                  navigationSplitViewColumnWidth({ min: 200, ideal: 240, max: 300 }),
                 ]}>
                 <Section title="Mailboxes">
                   {MAILBOXES.map((m) => (
@@ -249,7 +247,6 @@ export default function SplitViewScreen() {
                     modifiers={[
                       listStyle('plain'),
                       navigationTitle(mailbox.name),
-                      navigationSplitViewColumnWidth({ min: 300, ideal: 360, max: 440 }),
                     ]}>
                     {shown.map((m) => (
                       <MessageRow
