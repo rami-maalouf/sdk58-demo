@@ -130,7 +130,7 @@ The demo opens a screen with 1,000 tiles. Each tile waits 2 ms in render on purp
 
 ### Data loaders
 
-`src/app/more/loaders.tsx` exports a `loader` that fetches five posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com), and the screen reads them with `useLoaderData`. The loader does not go into the app bundle. In the app, the More list opens it. On web, the More tab links to it, and the other routes redirect to the More tab.
+`src/app/more/loaders.tsx` exports a `loader` that fetches five posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com), and the screen reads them with `useLoaderData`. The loader does not go into the app bundle. In the app, the More list opens it. On web, the More tab links to it.
 
 The app uses server output (`"web": { "output": "server" }`), so the loader runs on the server on each request, at `/_expo/loaders/more/loaders`. In development, `bun start` is that server. While the app waits for the data, the More stack shows a spinner (the `SuspenseFallback` export of `src/app/more/_layout.tsx`).
 
@@ -240,7 +240,7 @@ bun run export             # production bundles for iOS and Android, and the web
 
 ## Changes to the template
 
-- The welcome screens, the web files, and their assets are removed. The app runs on iOS and Android. The web platform is back only for the data loaders demo. The server loads every route for web, so the native-only routes have a `.web.tsx` file that redirects to the More tab, and the web More tab links only to the loaders demo.
+- The welcome screens, the web files, and their assets are removed. The app runs on iOS and Android. The web platform is back for the data loaders demo. Web shows only the More and Timer tabs (`src/components/app-tabs.web.tsx`), and the web More tab lists only the loaders demo. The server loads every route for web, so the native-only routes have a `.web.tsx` file. The Mail and Duo routes have no web tab, so web opens More for them, and `/more/<slug>` redirects to More.
 - `src/types/expo.d.ts` references `expo/types`, so the app type-checks before Metro generates `expo-env.d.ts`.
 - ESLint is on version 9. `expo install eslint` picks ESLint 10, and `eslint-plugin-react` crashes on it (`contextOrFilename.getFilename is not a function`).
 - `expo-dev-client` is installed, and `bun run ios` makes a development build.

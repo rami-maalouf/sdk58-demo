@@ -2,8 +2,6 @@ import { Stack } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useSystemColors } from '@/hooks/use-system-colors';
-
 // about two seconds of render in total, split into many small components, so react can pause
 // between them when the screen renders in a transition.
 const TILE_COUNT = 1000;
@@ -24,14 +22,13 @@ function SlowTile({ index }: { index: number }) {
 
 export default function HeavyScreen() {
   const insets = useSafeAreaInsets();
-  const colors = useSystemColors();
 
   return (
     <>
       <Stack.Screen options={{ title: `${TILE_COUNT} slow tiles` }} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={[styles.screen, { backgroundColor: colors.background }]}
+        style={styles.screen}
         contentContainerStyle={[
           styles.grid,
           { paddingLeft: 20 + insets.left, paddingRight: 20 + insets.right },
