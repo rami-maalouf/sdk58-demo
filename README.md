@@ -17,6 +17,7 @@ Each demo shows its label from the [SDK 58 changelog](https://expo.dev/changelog
 | More     | SVG variables      | `expo-image` `svgVariables`                           | New          | iOS, Android |
 | More     | Native race        | Expo Modules 2.0: `@JS` against the module DSL        | Beta         | iOS, Android |
 | More     | Heavy screen       | Expo Router navigation in a React transition          | Experimental | iOS, Android |
+| More     | Data loaders       | Expo Router data loaders                              | Stable       | iOS, Android |
 | All      | Tabs and toolbars  | Expo Router native tabs and `Stack.Toolbar`           | Stable       | iOS, Android |
 
 On Android, the tabs are Mail, Fold, Timer, and More, and the screens use Jetpack Compose through Expo UI.
@@ -127,6 +128,14 @@ The demo opens a screen with 1,000 tiles. Each tile waits 2 ms in render on purp
 - With "Use a transition" off, the push renders synchronously. JavaScript is blocked, and the taps count only after the screen opens.
 - With the switch on, the push calls `router.push(href, { inTransition: true })`. React renders the screen in the background and stops for each tap, so the counter goes up at once. The spinner shows `unstable_useIsNavigating()`. Each tap restarts the render, so the screen opens later.
 
+### Data loaders
+
+`src/app/more/loaders.tsx` exports a `loader` that fetches five posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com), and the screen reads them with `useLoaderData`. The loader does not go into the app bundle. Open the screen with `sdk58demo://more/loaders`. The More list does not show it.
+
+In development, `bun start` runs the loader on each request, at `/_expo/loaders/more/loaders`. While the app waits for the data, the More stack shows a spinner (the `SuspenseFallback` export of `src/app/more/_layout.tsx`).
+
+The app uses static output with API routes (`"web": { "output": "static" }` and `apiRoutes: true` on the `expo-router` plugin). `bunx expo export` runs the loader one time and writes its JSON to `dist/client/_expo/loaders/more/loaders`. A release build gets the data from a deployed copy of `dist`, set as the `origin` option of the `expo-router` plugin (not set in this repo).
+
 ### Faster Android builds
 
 In SDK 58, `expo-modules-core` ships its C++ libraries prebuilt for Android, so a clean build does not compile them. This script times a clean debug build for all four ABIs, with the prebuilt libraries or compiled from source:
@@ -226,12 +235,12 @@ Most demo code is copied from code that already runs on SDK 58, and each copied 
 bun run check              # typecheck and lint, zero warnings
 bunx expo install --check  # SDK-compatible dependency versions
 bunx expo-doctor@latest
-bun run export             # production bundles for iOS and Android
+bun run export             # production bundles for iOS, Android, and web (runs the loaders)
 ```
 
 ## Changes to the template
 
-- The welcome screens, the web files, and their assets are removed. The app runs on iOS and Android (`"platforms": ["ios", "android"]`).
+- The welcome screens, the web files, and their assets are removed. The app runs on iOS and Android. The web platform is back only so that `expo export` can run the data loaders. The native-only routes have a `.web.tsx` file that only says the demo runs in the app.
 - `src/types/expo.d.ts` references `expo/types`, so the app type-checks before Metro generates `expo-env.d.ts`.
 - ESLint is on version 9. `expo install eslint` picks ESLint 10, and `eslint-plugin-react` crashes on it (`contextOrFilename.getFilename is not a function`).
 - `expo-dev-client` is installed, and `bun run ios` makes a development build.
