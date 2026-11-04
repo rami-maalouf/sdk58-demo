@@ -132,7 +132,7 @@ The demo opens a screen with 1,000 tiles. Each tile waits 2 ms in render on purp
 
 `src/app/more/loaders.tsx` exports a `loader` that fetches five posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com), and the screen reads them with `useLoaderData`. The loader does not go into the app bundle. In the app, the More list opens it. On web, the More tab links to it.
 
-The app uses server output (`"web": { "output": "server" }`), so the loader runs on the server on each request, at `/_expo/loaders/more/loaders`. In development, `bun start` is that server. While the app waits for the data, the More stack shows a spinner (the `SuspenseFallback` export of `src/app/more/_layout.tsx`).
+The app uses server output (`"web": { "output": "server" }`), so the loader runs on the server on each request, at `/_expo/loaders/more/loaders`. In development, `bun start` is that server. The loader waits 1 s on purpose. While the app waits for the data, the More stack shows a spinner (the `SuspenseFallback` export of `src/app/more/_layout.tsx`).
 
 A release build needs a deployed server: `bunx expo export -p web`, then `bunx eas-cli deploy --prod`. Set its URL as the `origin` option of the `expo-router` plugin (not set in this repo).
 
