@@ -31,15 +31,10 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static"
+      "output": "server"
     },
     "plugins": [
-      [
-        "expo-router",
-        {
-          "apiRoutes": true
-        }
-      ],
+      "expo-router",
       [
         "expo-splash-screen",
         {
