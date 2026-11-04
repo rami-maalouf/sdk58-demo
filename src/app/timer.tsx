@@ -30,8 +30,12 @@ function useVisibleTime() {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
+    console.log('useVisibleTime mounted');
     const interval = setInterval(() => setSeconds((s) => s + 1), 1000);
-    return () => clearInterval(interval);
+    return () => {
+      console.log('useVisibleTime unmounted');
+      clearInterval(interval);
+    };
   }, []);
 
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
