@@ -4,6 +4,7 @@ import BrushIcon from '@expo/material-symbols/brush.xml';
 import DateRangeIcon from '@expo/material-symbols/date_range.xml';
 import DevicesFoldIcon from '@expo/material-symbols/devices_fold.xml';
 import FlagIcon from '@expo/material-symbols/flag.xml';
+import GridViewIcon from '@expo/material-symbols/grid_view.xml';
 import MailIcon from '@expo/material-symbols/mail.xml';
 import TextFieldsIcon from '@expo/material-symbols/text_fields.xml';
 import WidgetsIcon from '@expo/material-symbols/widgets.xml';
@@ -13,6 +14,7 @@ import { Platform, type ImageSourcePropType } from 'react-native';
 import type { SFSymbol } from 'sf-symbols-typescript';
 
 import ComposeComponentsScreen from './compose-components';
+import HeavyScreenDemo from './heavy-screen';
 import NativeRaceScreen from './native-race';
 import SvgVariablesScreen from './svg-variables';
 import VariableFontsScreen from './variable-fonts';
@@ -163,6 +165,16 @@ export const DEMOS: Demo[] = [
     status: 'Beta',
     changelog: Changelog.modules2,
     screen: NativeRaceScreen,
+  },
+  {
+    slug: 'heavy-screen',
+    title: 'Heavy screen',
+    description: 'A screen that takes two seconds to render, opened in a React transition',
+    systemImage: 'square.grid.3x3',
+    materialIcon: GridViewIcon,
+    status: 'Experimental',
+    changelog: Changelog.router,
+    screen: HeavyScreenDemo,
   },
   {
     slug: 'native-tabs',
