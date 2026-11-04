@@ -19,7 +19,6 @@ type ArrangementPickerProps = {
   selection: LayoutAxes;
   onSelectionChange: (selection: LayoutAxes) => void;
   width: number;
-  headerHeight: number;
   onHeightChange: (height: number) => void;
   supportsArrangement: boolean;
 };
@@ -28,7 +27,6 @@ export function ArrangementPicker({
   selection,
   onSelectionChange,
   width,
-  headerHeight,
   onHeightChange,
   supportsArrangement,
 }: ArrangementPickerProps) {
@@ -64,7 +62,6 @@ export function ArrangementPicker({
           padding({ horizontal: 20, vertical: 12 }),
           frame({ width }),
           onGeometryChange(({ height }) => onHeightChange(height)),
-          padding({ top: headerHeight }),
           disabled(!supportsArrangement),
         ]}>
         <Text modifiers={[tag('both')]}>Adaptive</Text>

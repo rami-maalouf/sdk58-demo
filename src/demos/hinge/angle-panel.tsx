@@ -24,14 +24,14 @@ const secondary = foregroundStyle({ type: 'hierarchical', style: 'secondary' });
 type AnglePanelProps = {
   hinge: Hinge | null;
   posture: string;
+  /** where the content starts below the picker. the panel always starts at the top. */
   contentTop: number;
   stacked: boolean;
 };
 
 export function AnglePanel({ hinge, posture, contentTop, stacked }: AnglePanelProps) {
-  const [panel, setPanel] = useState({ y: 0, height: 0 });
-  const topInset = Math.max(0, contentTop - panel.y);
-  const availableHeight = Math.max(0, panel.height - topInset);
+  const [panelHeight, setPanelHeight] = useState(0);
+  const availableHeight = Math.max(0, panelHeight - contentTop);
   const compact = availableHeight < 400;
 
   return (
@@ -40,7 +40,7 @@ export function AnglePanel({ hinge, posture, contentTop, stacked }: AnglePanelPr
       modifiers={[
         frame({ maxWidth: Infinity, maxHeight: stacked ? contentTop + 180 : Infinity }),
         background(Color.ios.systemGroupedBackground),
-        onGeometryChange(({ y, height }) => setPanel({ y, height })),
+        onGeometryChange(({ height }) => setPanelHeight(height)),
         splitArrangementLayoutSize({
           minHeight: contentTop + 144,
           idealHeight: contentTop + 160,
@@ -51,7 +51,7 @@ export function AnglePanel({ hinge, posture, contentTop, stacked }: AnglePanelPr
         spacing={8}
         modifiers={[
           frame({ minHeight: Math.max(0, availableHeight - 24), maxWidth: Infinity }),
-          padding({ horizontal: 28, top: topInset + 12, bottom: 12 }),
+          padding({ horizontal: 28, top: contentTop + 12, bottom: 12 }),
         ]}>
         <Text modifiers={[font({ textStyle: 'caption' }), secondary]}>Hinge angle</Text>
         <Text

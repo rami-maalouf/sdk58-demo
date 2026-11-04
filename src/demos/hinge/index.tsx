@@ -1,13 +1,13 @@
 // copied from nathan schroeder's expo-ui-examples (mit), src/examples/hinge/index.tsx at bf89951.
 import { Host } from '@expo/ui';
 import { ArrangementView, Overlay, VStack } from '@expo/ui/swift-ui';
-import { arrangementViewStyle, frame, ignoreSafeArea, tint } from '@expo/ui/swift-ui/modifiers';
+import { arrangementViewStyle, frame, tint } from '@expo/ui/swift-ui/modifiers';
 import { isAvailable, useHinge, type HingeStatus } from 'expo-hinge';
 import { Color, Stack } from 'expo-router';
-import { useHeaderHeight } from 'expo-router/react-navigation';
 import { useState } from 'react';
 import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-screens/experimental';
 
 import { AnglePanel } from './angle-panel';
 import { ArrangementPicker, type LayoutAxes } from './arrangement-picker';
@@ -34,10 +34,10 @@ export default function HingeScreen() {
 
   const { width } = useWindowDimensions();
   const safeArea = useSafeAreaInsets();
-  const headerHeight = useHeaderHeight();
   const [pickerHeight, setPickerHeight] = useState(56);
   const [detailsFrame, setDetailsFrame] = useState({ x: 0, y: 0, width: 0, height: 0 });
-  const contentTop = headerHeight + pickerHeight + FADE_HEIGHT / 2;
+  // where the content starts below the floating picker, from the top of the content.
+  const contentTop = pickerHeight + FADE_HEIGHT / 2;
   const sideBySide = !stacked && detailsFrame.x > safeArea.left;
   const pickerOnRight = sideBySide && hinge?.status === 'partiallyOpen';
   const availableWidth = width - safeArea.left - safeArea.right;
@@ -59,7 +59,9 @@ export default function HingeScreen() {
       session={session}
       onReset={reset}
       sideBySide={sideBySide}
-      topInset={Math.max(0, contentTop - detailsFrame.y)}
+      // beside the panel, the list starts at the top, under the picker. stacked, it is below the
+      // panel.
+      topInset={sideBySide ? contentTop : 0}
       onFrameChange={setDetailsFrame}
     />
   );
@@ -67,40 +69,42 @@ export default function HingeScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTintColor: Color.ios.systemBlue }} />
-      <Host style={{ flex: 1, backgroundColor: Color.ios.systemGroupedBackground }}>
-        <Overlay
-          alignment="top"
-          modifiers={[
-            fill,
-            tint(Color.ios.systemBlue),
-            ignoreSafeArea({ regions: 'container', edges: 'top' }),
-          ]}>
-          <TopFade contentTop={contentTop}>
-            {stacked ? (
-              // A vertical-only ArrangementView collapses on Duo's compact-height display.
-              <VStack spacing={0} modifiers={[fill]}>
-                {primary}
-                {secondary}
-              </VStack>
-            ) : (
-              <ArrangementView modifiers={[arrangementViewStyle('split', { axes }), fill]}>
-                <ArrangementView.Primary>{primary}</ArrangementView.Primary>
-                <ArrangementView.Secondary>{secondary}</ArrangementView.Secondary>
-              </ArrangementView>
-            )}
-          </TopFade>
-          <Overlay.Content>
-            <ArrangementPicker
-              selection={axes}
-              onSelectionChange={setAxes}
-              width={pickerWidth}
-              headerHeight={headerHeight}
-              onHeightChange={setPickerHeight}
-              supportsArrangement={supportsArrangement}
-            />
-          </Overlay.Content>
-        </Overlay>
-      </Host>
+      <SafeAreaView
+        edges={{ top: true, left: true, right: true }}
+        style={{ backgroundColor: Color.ios.systemGroupedBackground }}>
+        <Host style={{ flex: 1, backgroundColor: Color.ios.systemGroupedBackground }}>
+          <Overlay
+            alignment="top"
+            modifiers={[
+              fill,
+              tint(Color.ios.systemBlue),
+            ]}>
+            <TopFade contentTop={contentTop}>
+              {stacked ? (
+                // A vertical-only ArrangementView collapses on Duo's compact-height display.
+                <VStack spacing={0} modifiers={[fill]}>
+                  {primary}
+                  {secondary}
+                </VStack>
+              ) : (
+                <ArrangementView modifiers={[arrangementViewStyle('split', { axes }), fill]}>
+                  <ArrangementView.Primary>{primary}</ArrangementView.Primary>
+                  <ArrangementView.Secondary>{secondary}</ArrangementView.Secondary>
+                </ArrangementView>
+              )}
+            </TopFade>
+            <Overlay.Content>
+              <ArrangementPicker
+                selection={axes}
+                onSelectionChange={setAxes}
+                width={pickerWidth}
+                onHeightChange={setPickerHeight}
+                supportsArrangement={supportsArrangement}
+              />
+            </Overlay.Content>
+          </Overlay>
+        </Host>
+      </SafeAreaView>
     </>
   );
 }
