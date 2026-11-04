@@ -34,14 +34,7 @@
       "output": "server"
     },
     "plugins": [
-      [
-        "expo-router",
-        {
-          "asyncRoutes": {
-            "web": false
-          }
-        }
-      ],
+      "expo-router",
       [
         "expo-splash-screen",
         {

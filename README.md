@@ -240,7 +240,7 @@ bun run export             # production bundles for iOS and Android, and the web
 
 ## Changes to the template
 
-- The welcome screens, the web files, and their assets are removed. The app runs on iOS and Android. The web platform is back for the data loaders demo. Web hides the Mail and Duo tabs (`hidden` in `src/components/app-tabs.tsx`), and the web More tab lists only the loaders demo. The server loads every route for web, so the native-only routes have a `.web.tsx` file. Web opens the first visible tab (Timer) for the Mail and Duo routes, and `/more/<slug>` redirects to More. Async routes are off on web (`asyncRoutes.web: false` on the `expo-router` plugin), because with them the development server sends the first HTML without the tab bar styles. So production web ships one bundle, not one chunk per route.
+- The welcome screens, the web files, and their assets are removed. The app runs on iOS and Android. The web platform is back for the data loaders demo. Web hides the Mail and Duo tabs (`hidden` in `src/components/app-tabs.tsx`), and the web More tab lists only the loaders demo. The server loads every route for web, so the native-only routes have a `.web.tsx` file. Web opens the first visible tab (Timer) for the Mail and Duo routes, and `/more/<slug>` redirects to More.
 - `src/types/expo.d.ts` references `expo/types`, so the app type-checks before Metro generates `expo-env.d.ts`.
 - ESLint is on version 9. `expo install eslint` picks ESLint 10, and `eslint-plugin-react` crashes on it (`contextOrFilename.getFilename is not a function`).
 - `expo-dev-client` is installed, and `bun run ios` makes a development build.
