@@ -1,7 +1,6 @@
 import { useTheme } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
-import { useVisibleTime } from '@/hooks/use-visible-time';
 
 // a tab without a stack, so the activityEnabled of the native tabs reaches it.
 export default function TimerScreen() {
@@ -25,3 +24,15 @@ const styles = StyleSheet.create({
   // the opacity of the ios secondary label.
   caption: { fontSize: 15, textAlign: 'center', opacity: 0.6 },
 });
+
+// how long the screen has been visible, as `m:ss`.
+function useVisibleTime() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
