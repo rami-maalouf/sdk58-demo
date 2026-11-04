@@ -3,6 +3,7 @@ import BottomNavigationIcon from '@expo/material-symbols/bottom_navigation.xml';
 import BrushIcon from '@expo/material-symbols/brush.xml';
 import DateRangeIcon from '@expo/material-symbols/date_range.xml';
 import DevicesFoldIcon from '@expo/material-symbols/devices_fold.xml';
+import DnsIcon from '@expo/material-symbols/dns.xml';
 import FlagIcon from '@expo/material-symbols/flag.xml';
 import GridViewIcon from '@expo/material-symbols/grid_view.xml';
 import MailIcon from '@expo/material-symbols/mail.xml';
@@ -44,7 +45,7 @@ export const Changelog = {
   modules2: { id: 'expo-modules-20-beta', title: 'Expo Modules 2.0 beta' },
   router: {
     id: 'expo-router-stable-data-loaders-and-native-tabs-improved-core',
-    title: 'Expo Router: stable native tabs',
+    title: 'Expo Router: stable data loaders and native tabs',
   },
   other: { id: 'other-notable-changes', title: 'Other notable changes' },
   androidWidgets: { id: 'home-screen-widgets-come-to-android', title: 'Home screen widgets' },
@@ -63,7 +64,7 @@ export type Demo = {
   materialIcon: ImageSourcePropType;
   status: Status;
   changelog: ChangelogSection;
-  /** a demo with its own tab. the more list opens the tab. */
+  /** a demo with its own route: a tab, or a route with a loader. the more list opens it. */
   href?: Href;
   /** a demo in the more tab, opened at `/more/<slug>`. */
   screen?: ComponentType;
@@ -175,6 +176,16 @@ export const DEMOS: Demo[] = [
     status: 'Experimental',
     changelog: Changelog.router,
     screen: HeavyScreenDemo,
+  },
+  {
+    slug: 'loaders',
+    title: 'Data loaders',
+    description: 'A route loader fetches posts on the server',
+    systemImage: 'server.rack',
+    materialIcon: DnsIcon,
+    status: 'Stable',
+    changelog: Changelog.router,
+    href: '/more/loaders',
   },
   {
     slug: 'native-tabs',

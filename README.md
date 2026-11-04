@@ -17,7 +17,7 @@ Each demo shows its label from the [SDK 58 changelog](https://expo.dev/changelog
 | More     | SVG variables      | `expo-image` `svgVariables`                           | New          | iOS, Android |
 | More     | Native race        | Expo Modules 2.0: `@JS` against the module DSL        | Beta         | iOS, Android |
 | More     | Heavy screen       | Expo Router navigation in a React transition          | Experimental | iOS, Android |
-| More     | Data loaders       | Expo Router data loaders                              | Stable       | iOS, Android |
+| More     | Data loaders       | Expo Router data loaders                              | Stable       | iOS, Android, web |
 | All      | Tabs and toolbars  | Expo Router native tabs and `Stack.Toolbar`           | Stable       | iOS, Android |
 
 On Android, the tabs are Mail, Fold, Timer, and More, and the screens use Jetpack Compose through Expo UI.
@@ -130,7 +130,7 @@ The demo opens a screen with 1,000 tiles. Each tile waits 2 ms in render on purp
 
 ### Data loaders
 
-`src/app/more/loaders.tsx` exports a `loader` that fetches five posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com), and the screen reads them with `useLoaderData`. The loader does not go into the app bundle. In the app, the More list does not show it. Open it with `sdk58demo://more/loaders`. On web, the More tab links to it, and the other routes redirect to the More tab.
+`src/app/more/loaders.tsx` exports a `loader` that fetches five posts from [JSONPlaceholder](https://jsonplaceholder.typicode.com), and the screen reads them with `useLoaderData`. The loader does not go into the app bundle. In the app, the More list opens it. On web, the More tab links to it, and the other routes redirect to the More tab.
 
 The app uses server output (`"web": { "output": "server" }`), so the loader runs on the server on each request, at `/_expo/loaders/more/loaders`. In development, `bun start` is that server. While the app waits for the data, the More stack shows a spinner (the `SuspenseFallback` export of `src/app/more/_layout.tsx`).
 
