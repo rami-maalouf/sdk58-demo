@@ -5,6 +5,8 @@ type Post = { id: number; title: string };
 
 // runs on the server on each request, not in the app. the app gets only the returned json.
 export async function loader() {
+  // demo only: act like a slow server, so the suspense fallback stays on screen for a moment.
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
   if (!response.ok) throw new Error(`posts request failed: ${response.status}`);
   const posts: Post[] = await response.json();
