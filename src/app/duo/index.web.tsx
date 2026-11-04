@@ -1,6 +1,5 @@
-import { Redirect } from 'expo-router';
-
-// this demo uses native-only modules, so web goes to the more tab.
+// keeps the native-only screen out of the web server. web has no tab for this route, so the
+// web tabs open more instead.
 export default function NativeOnly() {
-  return <Redirect href="/more" />;
+  return null;
 }
