@@ -1,4 +1,4 @@
-import { Stack, useLoaderData, useTheme } from 'expo-router';
+import { useLoaderData, useTheme } from 'expo-router';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 
 type Post = { id: number; title: string };
@@ -17,7 +17,6 @@ export default function LoadersScreen() {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content}>
-      <Stack.Screen options={{ title: 'Data loaders' }} />
       {posts.map((post) => (
         <Text key={post.id} style={[styles.title, { color: colors.text }]}>
           {post.title}
