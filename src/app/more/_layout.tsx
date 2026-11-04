@@ -1,7 +1,18 @@
-import { Stack } from 'expo-router';
-import { Platform } from 'react-native';
+import { Stack, useTheme } from 'expo-router';
+import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 
 import { stackScreenOptions } from '@/components/stack-screen-options';
+
+// shows while a screen in this stack waits for its loader data. on native, a loader screen always
+// waits on its first render. only a layout can set this fallback.
+export function SuspenseFallback() {
+  const { colors } = useTheme();
+  return (
+    <View style={styles.fallback}>
+      <ActivityIndicator size="large" color={colors.primary} />
+    </View>
+  );
+}
 
 export default function MoreLayout() {
   return (
@@ -13,6 +24,11 @@ export default function MoreLayout() {
           Platform.OS === 'ios' ? { title: 'More', headerLargeTitle: true } : { headerShown: false }
         }
       />
+      <Stack.Screen name="loaders" options={{ title: 'Data loaders' }} />
     </Stack>
   );
 }
+
+const styles = StyleSheet.create({
+  fallback: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+});

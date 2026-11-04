@@ -5,7 +5,8 @@
     "version": "1.0.0",
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "web"
     ],
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -28,6 +29,9 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "server"
     },
     "plugins": [
       "expo-router",
