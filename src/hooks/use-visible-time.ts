@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-/**
- * how long the screen has been visible, as `m:ss`. with `activityEnabled` on the tabs, react
- * activity stops the interval while another tab is open and keeps the count, so the timer pauses
- * and goes on from the same value when you come back.
- */
+// how long the screen has been visible, as `m:ss`.
 export function useVisibleTime() {
   const [seconds, setSeconds] = useState(0);
 

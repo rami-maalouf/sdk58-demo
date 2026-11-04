@@ -4,8 +4,8 @@ import { Platform } from 'react-native';
 // expo router native tabs, stable in sdk 58: sf symbols on ios, material symbols on android.
 export default function AppTabs() {
   return (
-    // activityEnabled: a tab you leave stops its effects, such as the hinge listener, and keeps
-    // its state. the effects start again when you come back.
+    // activityEnabled: a tab you leave stops its effects and keeps its state. it only reaches tabs
+    // without a stack, such as timer, not duo or more.
     <NativeTabs sidebarAdaptable activityEnabled>
       {/* mail stays active: it handles siri drafts and the android widget's "mark all read". */}
       <NativeTabs.Trigger name="index" activityEnabled={false}>
@@ -22,6 +22,11 @@ export default function AppTabs() {
           {Platform.OS === 'ios' ? 'Duo' : 'Fold'}
         </NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="rectangle.split.2x1" md="devices_fold" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="timer">
+        <NativeTabs.Trigger.Label>Timer</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf={{ default: 'clock', selected: 'clock.fill' }} md="schedule" />
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="more">

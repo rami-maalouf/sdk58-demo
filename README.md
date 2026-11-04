@@ -18,7 +18,7 @@ Each demo shows its label from the [SDK 58 changelog](https://expo.dev/changelog
 | More     | Native race        | Expo Modules 2.0: `@JS` against the module DSL        | Beta   | iOS, Android |
 | All      | Tabs and toolbars  | Expo Router native tabs and `Stack.Toolbar`           | Stable | iOS, Android |
 
-On Android, the tabs are Mail, Fold, and More, and the screens use Jetpack Compose through Expo UI.
+On Android, the tabs are Mail, Fold, Timer, and More, and the screens use Jetpack Compose through Expo UI.
 
 ### Mail
 
@@ -197,7 +197,7 @@ The app includes [Expo Device Hub](https://github.com/expo/expo-device-hub), an 
 
 ## How the code is organized
 
-- `src/app/`: the routes. `index.tsx` is the Mail tab, `duo/` is the Duo tab, and `more/` is the More tab.
+- `src/app/`: the routes. `index.tsx` is the Mail tab, `duo/` is the Duo tab, `timer.tsx` is the Timer tab, and `more/` is the More tab.
 - `src/demos/<slug>/`: one folder per demo, with all of its code.
 - `src/demos/registry.ts`: one line per demo, with its title, changelog label, and changelog section.
 - `modules/`: the local native modules of the native race.
