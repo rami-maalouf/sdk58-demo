@@ -1,4 +1,6 @@
-// the server loads every route for web, and this route imports native-only modules.
+import { Redirect } from 'expo-router';
+
+// this demo uses native-only modules, so web goes to the more tab.
 export default function NativeOnly() {
-  return null;
+  return <Redirect href="/more" />;
 }
