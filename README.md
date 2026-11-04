@@ -127,12 +127,6 @@ The demo opens a screen with 1,000 tiles. Each tile waits 2 ms in render on purp
 - With "Use a transition" off, the push renders synchronously. JavaScript is blocked, and the taps count only after the screen opens.
 - With the switch on, the push calls `router.push(href, { inTransition: true })`. React renders the screen in the background and stops for each tap, so the counter goes up at once. The spinner shows `unstable_useIsNavigating()`. Each tap restarts the render, so the screen opens later.
 
-The counter counts taps, not frames. On iOS, `requestAnimationFrame` and timers fire on the run loop of the JavaScript thread, so they cannot interrupt a render. Touches come from the main thread, so React stops for them.
-
-`src/app/_layout.tsx` sets `router.setTransitionMode('always')`, so all navigation in the app uses transitions. The switch turns the transition off for this one push. The heavy screen is the route `src/app/more/transitions/heavy.tsx`.
-
-A transition does not keep the old screen when the new screen suspends, for example on `use(promise)`. Each pushed screen mounts new Suspense boundaries (one from Expo Router, one from `Freeze` in react-native-screens), and React shows the fallback of a new boundary.
-
 ### Faster Android builds
 
 In SDK 58, `expo-modules-core` ships its C++ libraries prebuilt for Android, so a clean build does not compile them. This script times a clean debug build for all four ABIs, with the prebuilt libraries or compiled from source:
