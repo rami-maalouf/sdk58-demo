@@ -4,8 +4,11 @@ import { Platform } from 'react-native';
 // expo router native tabs, stable in sdk 58: sf symbols on ios, material symbols on android.
 export default function AppTabs() {
   return (
-    <NativeTabs sidebarAdaptable>
-      <NativeTabs.Trigger name="index">
+    // activityEnabled: a tab you leave stops its effects, such as the hinge listener, and keeps
+    // its state. the effects start again when you come back.
+    <NativeTabs sidebarAdaptable activityEnabled>
+      {/* mail stays active: it handles siri drafts and the android widget's "mark all read". */}
+      <NativeTabs.Trigger name="index" activityEnabled={false}>
         <NativeTabs.Trigger.Label>Mail</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
           sf={{ default: 'envelope', selected: 'envelope.fill' }}
