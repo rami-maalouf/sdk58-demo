@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack, useTheme } from 'expo-router';
 import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
 
 import { stackScreenOptions } from '@/components/stack-screen-options';
@@ -6,9 +6,10 @@ import { stackScreenOptions } from '@/components/stack-screen-options';
 // shows while a screen in this stack waits for its loader data. on native, a loader screen always
 // waits on its first render. only a layout can set this fallback.
 export function SuspenseFallback() {
+  const { colors } = useTheme();
   return (
     <View style={styles.fallback}>
-      <ActivityIndicator />
+      <ActivityIndicator size="large" color={colors.primary} />
     </View>
   );
 }
