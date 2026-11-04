@@ -7,8 +7,12 @@ export default function AppTabs() {
     // activityEnabled: a tab you leave stops its effects and keeps its state. it only reaches tabs
     // without a stack, such as timer, not duo or more.
     <NativeTabs sidebarAdaptable activityEnabled>
-      {/* mail stays active: it handles siri drafts and the android widget's "mark all read". */}
-      <NativeTabs.Trigger name="index" activityEnabled={false}>
+      {/* mail stays active: it handles siri drafts and the android widget's "mark all read".
+          mail and duo use native-only modules, so web hides them. */}
+      <NativeTabs.Trigger
+        name="index"
+        activityEnabled={false}
+        hidden={process.env.EXPO_OS === 'web'}>
         <NativeTabs.Trigger.Label>Mail</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
           sf={{ default: 'envelope', selected: 'envelope.fill' }}
@@ -16,7 +20,7 @@ export default function AppTabs() {
         />
       </NativeTabs.Trigger>
 
-      <NativeTabs.Trigger name="duo">
+      <NativeTabs.Trigger name="duo" hidden={process.env.EXPO_OS === 'web'}>
         {/* the hinge tab runs on the iphone duo and on android foldables. */}
         <NativeTabs.Trigger.Label>
           {Platform.OS === 'ios' ? 'Duo' : 'Fold'}
