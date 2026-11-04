@@ -23,6 +23,7 @@ export default function MoreLayout() {
           Platform.OS === 'ios' ? { title: 'More', headerLargeTitle: true } : { headerShown: false }
         }
       />
+      <Stack.Screen name="loaders" options={{ title: 'Data loaders' }} />
     </Stack>
   );
 }
