@@ -3,8 +3,7 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 
 type Post = { id: number; title: string };
 
-// runs on the server, not in the app: at export time with static output, and on each request in
-// `expo start`. the app gets only the returned json.
+// runs on the server on each request, not in the app. the app gets only the returned json.
 export async function loader() {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
   if (!response.ok) throw new Error(`posts request failed: ${response.status}`);
