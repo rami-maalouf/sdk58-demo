@@ -30,7 +30,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusColors } from '@/constants/theme';
 import { openChangelog } from '@/demos/demo-toolbar';
 import { DEMOS_HERE, type Demo } from '@/demos/registry';
-import { useVisibleTime } from '@/hooks/use-visible-time';
 
 // Material 3 "grouped list" corner treatment: the group reads as one rounded
 // slab, so only its outer corners get the full radius and the seams stay tight.
@@ -115,7 +114,6 @@ export default function MoreScreen() {
   };
   const inMore = DEMOS_HERE.filter((d) => d.screen);
   const elsewhere = DEMOS_HERE.filter((d) => !d.screen);
-  const visibleTime = useVisibleTime();
 
   return (
     <Host style={{ flex: 1 }}>
@@ -134,14 +132,6 @@ export default function MoreScreen() {
             style={{ typography: 'displaySmall' }}
             modifiers={[padding(4, 8, 4, 16)]}>
             More
-          </Text>
-
-          {/* react activity pauses this timer while another tab is open. */}
-          <Text
-            color={colors.onSurfaceVariant}
-            style={{ typography: 'bodyMedium' }}
-            modifiers={[padding(4, 0, 4, 8)]}>
-            {`Tab open for ${visibleTime}. It pauses while another tab is open.`}
           </Text>
 
           <Text
